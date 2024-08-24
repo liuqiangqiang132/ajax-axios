@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>原生的ajax的get请求</title>
+    <style>
+        #result{
+            margin-top: 5px;
+            width: 200px;
+            height: 100px;
+            border: solid 1px #90b;
+        }
+    </style>
+</head>
+<body>
+    <button>ajax发送get请求</button>
+    <div id="result"></div>
+    <script>
+       const button =  document.getElementsByTagName("button")[0];
+       button.onclick =()=>{
+        //创建对象
+         const xhr = new XMLHttpRequest();
+         //设置请求的方法和url
+        //  xhr.open("GET","http://localhost:8000/server");
+         xhr.open("GET","http://www.hao123.com");
+         xhr.setRequestHeader("Access-Control-Allow-Origin","*"); //解决请求跨域
+         //发送
+         xhr.send();
+         
+         //处理响应结果
+         xhr.onreadystatechange = ()=>{
+            //判断结果0.1.2.3.4
+            if(xhr.readyState === 4 ){
+                //判断响应状态码200 403 404 500
+                if(xhr.status >=200 && xhr.status < 300){
+                    //处理响应 行 头 空行 体
+                    //1.行
+                    console.log(xhr.status); //响应状态码
+                    //2.头
+                    console.log(xhr.statusText); //响应字符串
+                    //3.空行
+                    console.log(xhr.getAllResponseHeaders()); //获取所有的响应头
+                    //4.体
+                    console.log(xhr.response);
+                    //添加响应体到div中
+                    const div = document.getElementById("result");
+                    div.innerHTML=xhr.response;
+                    
+                }
+               
+            }
+         }
+         
+       }
+    </script>
+</body>
+</html>
